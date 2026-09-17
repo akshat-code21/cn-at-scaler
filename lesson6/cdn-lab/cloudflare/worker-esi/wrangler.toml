@@ -1,0 +1,10 @@
+name = "cn-session6-esi"
+main = "src/index.js"
+compatibility_date = "2026-08-01"
+
+# Route this Worker in front of your zone, e.g.
+# routes = [{ pattern = "news.example.com/page/*", zone_name = "example.com" }]
+
+[vars]
+ORIGIN = "https://origin.example.com"   # where page shells and fragments live
+# optional secret the origin checks:  npx wrangler secret put EDGE_SECRET

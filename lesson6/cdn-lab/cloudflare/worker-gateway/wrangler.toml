@@ -1,0 +1,20 @@
+name = "cn-session6-gateway"
+main = "src/index.js"
+compatibility_date = "2026-08-01"
+
+# routes = [{ pattern = "api.example.com/*", zone_name = "example.com" }]
+
+[vars]
+PRIMARY = "https://origin-a.example.com"
+BACKUP  = "https://origin-b.example.com"
+# secrets, not vars:
+#   npx wrangler secret put JWT_SECRET
+#   npx wrangler secret put EDGE_SECRET
+
+[[ratelimits]]
+name = "LIMITER"
+namespace_id = "1001"
+
+  [ratelimits.simple]
+  limit = 100
+  period = 10
