@@ -53,7 +53,7 @@ public class Server {
                             if (!headers.containsKey("Host")) {
                                 responseBody = "400 Bad Request";
                                 status = " 400 Bad Request";
-                            }
+                            } else {
                             switch (pathOnly) {
                                 case "/add":
                                     if (queryParams.get("a") == null || queryParams.get("b") == null
@@ -118,6 +118,7 @@ public class Server {
                                     status = " 404 Not Found";
                                     break;
                             }
+                            }
                         }
 
                         String httpResponse = "HTTP/1.1" + status + "\r\n" + "Content-Type: " + contentType + "\r\n"
@@ -132,7 +133,7 @@ public class Server {
 
     public static boolean isNumeric(String a) {
         try {
-            Double.parseDouble(a);
+            Integer.parseInt(a);
             return true;
         } catch (NumberFormatException e) {
             return false;
