@@ -33,17 +33,25 @@ Listens on **port 8080**.
 | `POST /add` | `405` (method not allowed) |
 | `GET /add` without `Host` header | `400` |
 
-## Example session (one connection, six requests)
+## Example session (one connection, multiple requests)
 
-```python
-import socket
+```java
+import java.io.*;
+import java.net.Socket;
+import java.nio.charset.StandardCharsets;
 
-s = socket.create_connection(("localhost", 8080))
-for req in [b"GET /add?a=2&b=3 HTTP/1.1\r\nHost: localhost\r\n\r\n",
-            b"GET /div?a=1&b=0 HTTP/1.1\r\nHost: localhost\r\n\r\n"]:
-    s.sendall(req)
-    print(s.recv(1024).decode())
-# 1 TCP handshake, 2 responses, socket still open
+Socket s = new Socket("localhost", 8080);
+OutputStream out = s.getOutputStream();
+InputStream in = s.getInputStream();
+
+String req = "GET /add?a=2&b=3 HTTP/1.1\r\nHost: localhost\r\n\r\n";
+out.write(req.getBytes(StandardCharsets.UTF_8));
+out.flush();
+
+byte[] buf = new byte[1024];
+int n = in.read(buf);
+System.out.println(new String(buf, 0, n));
+// 1 TCP handshake, responses received, socket stays open
 ```
 
 ## Notes
